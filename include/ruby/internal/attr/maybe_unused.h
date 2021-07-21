@@ -28,7 +28,11 @@
 #if RBIMPL_HAS_CPP_ATTRIBUTE(maybe_unused)
 # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
 #elif RBIMPL_HAS_C_ATTRIBUTE(maybe_unused)
+#ifndef __clang__
 # define RBIMPL_ATTR_MAYBE_UNUSED() [[maybe_unused]]
+#else
+# define RBIMPL_ATTR_MAYBE_UNUSED() /* void */
+#endif
 #elif RBIMPL_HAS_ATTRIBUTE(unused)
 # define RBIMPL_ATTR_MAYBE_UNUSED() __attribute__((__unused__))
 #else
