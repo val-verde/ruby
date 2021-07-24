@@ -2423,7 +2423,9 @@ next_line:
 
 #include <stdarg.h>
 #define MAXNBUF (sizeof(intmax_t) * CHAR_BIT + 1)
+#ifndef __ANDROID__
 static inline int toupper(int c) { return ('A' <= c && c <= 'Z') ? (c&0x5f) : c; }
+#endif
 #define    hex2ascii(hex)  (hex2ascii_data[hex])
 static const char hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 static inline int imax(int a, int b) { return (a > b ? a : b); }
