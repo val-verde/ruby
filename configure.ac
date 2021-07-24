@@ -506,7 +506,7 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 	AS_IF([test "x$cross_compiling" = xno], [
                 AC_MSG_CHECKING([for Android API version])
                 # hacky workaround: https://github.com/termux/termux-packages/issues/6176
-                rb_android_api=`getprop ro.build.version.sdk`
+                rb_android_api=${ANDROID_API_LEVEL:-`getprop ro.build.version.sdk`}
                 AC_MSG_RESULT($rb_android_api)
                 RUBY_APPEND_OPTIONS(CPPFLAGS, -D__ANDROID_API__=$rb_android_api -Wno-macro-redefined)
 	])
