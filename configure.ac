@@ -866,10 +866,6 @@ AS_IF([test "$GCC" = yes], [
 
     AS_CASE(["$target_os"], [mingw*], [
 	RUBY_TRY_CFLAGS(-fno-omit-frame-pointer, [optflags="${optflags+$optflags }-fno-omit-frame-pointer"])
-	RUBY_TRY_CFLAGS(-static-libgcc, [static_libgcc=yes], [static_libgcc=no])
-	AS_IF([test "$static_libgcc" = yes], [
-	    RUBY_APPEND_OPTION(EXTLDFLAGS, -static-libgcc)
-	])
     ])
 
     # disable fast-math
@@ -930,7 +926,6 @@ AC_ARG_WITH(winnt-ver,
 AS_CASE(["$target_os"],
 [mingw*], [
   RUBY_APPEND_OPTION(CPPFLAGS, -D_WIN32_WINNT=$with_winnt_ver)
-  RUBY_APPEND_OPTION(CPPFLAGS, -D__MINGW_USE_VC2005_COMPAT)
 ])
 
 AS_CASE(["$target_os"],
