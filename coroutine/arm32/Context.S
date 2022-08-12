@@ -12,7 +12,9 @@
 .text
 .globl PREFIXED_SYMBOL(SYMBOL_PREFIX,coroutine_transfer)
 .align 2
+#ifndef _WIN32
 .type PREFIXED_SYMBOL(SYMBOL_PREFIX,coroutine_transfer),%function
+#endif
 .syntax unified
 
 PREFIXED_SYMBOL(SYMBOL_PREFIX,coroutine_transfer):

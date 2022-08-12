@@ -693,7 +693,23 @@ dump_thread(void *arg)
 		    DWORD mac;
 		    STACKFRAME64 frame;
 		    memset(&frame, 0, sizeof(frame));
-#if defined(_M_AMD64) || defined(__x86_64__)
+#if defined(_M_ARM) || defined(__arm__)
+		    mac = IMAGE_FILE_MACHINE_ARM;
+		    frame.AddrPC.Mode = AddrModeFlat;
+		    frame.AddrPC.Offset = context.Pc;
+		    frame.AddrFrame.Mode = AddrModeFlat;
+		    frame.AddrFrame.Offset = context.R11;
+		    frame.AddrStack.Mode = AddrModeFlat;
+		    frame.AddrStack.Offset = context.Sp;
+#elif defined(_M_ARM64) || defined(__aarch64__)
+		    mac = IMAGE_FILE_MACHINE_ARM64;
+		    frame.AddrPC.Mode = AddrModeFlat;
+		    frame.AddrPC.Offset = context.Pc;
+		    frame.AddrFrame.Mode = AddrModeFlat;
+		    frame.AddrFrame.Offset = context.Fp;
+		    frame.AddrStack.Mode = AddrModeFlat;
+		    frame.AddrStack.Offset = context.Sp;
+#elif defined(_M_AMD64) || defined(__x86_64__)
 		    mac = IMAGE_FILE_MACHINE_AMD64;
 		    frame.AddrPC.Mode = AddrModeFlat;
 		    frame.AddrPC.Offset = context.Rip;
@@ -701,7 +717,7 @@ dump_thread(void *arg)
 		    frame.AddrFrame.Offset = context.Rbp;
 		    frame.AddrStack.Mode = AddrModeFlat;
 		    frame.AddrStack.Offset = context.Rsp;
-#else	/* i386 */
+#elif defined(_M_IX86) || defined(__i386__)
 		    mac = IMAGE_FILE_MACHINE_I386;
 		    frame.AddrPC.Mode = AddrModeFlat;
 		    frame.AddrPC.Offset = context.Eip;

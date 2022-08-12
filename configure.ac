@@ -2526,6 +2526,12 @@ AS_CASE([$coroutine_type], [yes|''], [
                 dnl unknown pointer size, bail out as no Context.h soon.
             )
         ],
+        [aarch64-mingw*], [
+            coroutine_type=arm64
+        ],
+        [arm*-mingw*], [
+            coroutine_type=arm32
+        ],
         [*86-linux*], [
             coroutine_type=x86
         ],
@@ -3520,6 +3526,7 @@ AS_CASE("$enable_shared", [yes], [
 	],
     [cygwin*|msys*|mingw*|mswin*], [
 	LIBRUBY_RELATIVE=yes
+	LIBRUBYARG_SHARED='-lucrt -l${RUBY_SO_NAME}'
 	])
 ], [
   LIBRUBYARG_SHARED=
@@ -4094,7 +4101,7 @@ AS_IF([test "${universal_binary-no}" = yes ], [
     AC_DEFINE_UNQUOTED(RUBY_ARCH, "universal-" RUBY_PLATFORM_OS)
     AC_DEFINE_UNQUOTED(RUBY_PLATFORM, "universal." RUBY_PLATFORM_CPU "-" RUBY_PLATFORM_OS)
 ], [
-    AS_IF([test "${target_os}-${rb_cv_msvcrt}" = "mingw32-ucrt" ], [
+    AS_IF([test "${target_os}-${rb_cv_msvcrt}" = "mingw*-ucrt" ], [
         arch="${target_cpu}-mingw-ucrt"
     ], [
         arch="${target_cpu}-${target_os}"
