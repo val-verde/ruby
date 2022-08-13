@@ -2567,7 +2567,7 @@ static size_t pioinfo_extra = 0;	/* workaround for VC++8 SP1 */
 static void
 set_pioinfo_extra(void)
 {
-#if RUBY_MSVCRT_VERSION >= 140
+#if defined(_MSC_VER) && RUBY_MSVCRT_VERSION >= 140
 # define FUNCTION_RET 0xc3 /* ret */
 # ifdef _DEBUG
 #  define UCRTBASE "ucrtbased.dll"
